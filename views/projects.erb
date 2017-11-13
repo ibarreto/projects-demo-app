@@ -1,0 +1,13 @@
+<h1>Projects</h1>
+
+<% projects.each do |p| %>
+  <p>Name: <%= p[:name] %></p>
+  <p>Description: <%= p[:description] %></p>
+<% end %>
+
+<h2>Add new project</h2>
+<form action="/projects" method="post">
+  Name: <input name="project_name" type="text">
+  Description: <input name="project_description" type="text">
+  <input type="submit">
+</form>
