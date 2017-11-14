@@ -11,7 +11,7 @@ end
 
 post '/projects' do
   projects << { :name => params[:project_name], :description => params[:project_description] }
-  redirect('/projects')
+  redirect('/')
 end
 
 get '/projects/:project_id' do
