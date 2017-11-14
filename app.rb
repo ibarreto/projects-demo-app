@@ -6,10 +6,6 @@ projects = [
 ]
 
 get '/' do
-  erb :index
-end
-
-get '/projects' do
   erb :projects, :locals => { :projects => projects }
 end
 
