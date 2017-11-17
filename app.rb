@@ -8,6 +8,12 @@ projects = [
 ]
 
 get '/' do
+  access_token = ENV['ACCESS_TOKEN']
+  response = Net::HTTP.get_response(URI("https://api.github.com/users/ibarreto/repos?acces_token=#{access_token}"))
+  repos = JSON.parse(response.body)
+  repos.map!{|repo| {:id => repo["id"], :name => repo["name"], :description => repo["description"]}}
+
+  projects += repos
   erb :projects, :locals => { :projects => projects }
 end
 
@@ -17,15 +23,6 @@ post '/projects' do
 end
 
 get '/projects/:project_id' do
-  project = projects[params[:project_id].to_i]
+  project = projects.detect{|p| p[:id] == params[:project_id].to_i}
   erb :project, :locals => { :project => project }
-end
-
-get '/repos' do
-  access_token = ENV['ACCESS_TOKEN']
-  response = Net::HTTP.get_response(URI("https://api.github.com/users/ibarreto/repos?acces_token=#{access_token}"))
-  repos = JSON.parse(response.body)
-  repos.map!{|repo| {:name => repo["name"], :description => repo["description"]}}
-  puts repos
-  erb :repos, :locals => { :repos => repos }
 end
