@@ -2,11 +2,6 @@ require 'sinatra'
 require 'net/http'
 require 'json'
 
-projects = [
-  { :id => 0, :name => 'Test 1', :description => 'description 1' },
-  { :id => 1, :name => 'Test 2', :description => 'description 2' }
-]
-
 get '/' do
   access_token = ENV['ACCESS_TOKEN']
   response = Net::HTTP.get_response(URI("https://api.github.com/users/ibarreto/repos?access_token=#{access_token}"))
@@ -34,7 +29,11 @@ post '/projects' do
   redirect('/')
 end
 
-get '/projects/:project_id' do
-  project = projects.detect{|p| p[:id] == params[:project_id].to_i}
+get '/projects/:project_name' do
+  access_token = ENV['ACCESS_TOKEN']
+  response = Net::HTTP.get_response(URI("https://api.github.com/repos/ibarreto/#{params[:project_name]}?access_token=#{access_token}"))
+  repo = JSON.parse(response.body)
+  project = {:name => repo["name"], :description => repo["description"]}
+
   erb :project, :locals => { :project => project }
 end
