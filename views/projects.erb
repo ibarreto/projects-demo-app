@@ -1,4 +1,7 @@
 <h1>Projects</h1>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createProjectModal">
+  Create new project
+</button>
 <div class="row">
   <% projects.each do |p| %>
     <div class="col-sm-6">
@@ -6,15 +9,37 @@
         <div class="card-body">
           <h4 class="card-title"><%= p[:name] %></h4>
           <p class="card-text"><%= p[:description] %></p>
-          <a href="/projects/<%= p[:id] %>" class="btn btn-primary">More details</a>
+          <a href="/projects/<%= p[:name] %>" class="btn btn-primary">More details</a>
         </div>
       </div>
     </div>
   <% end %>
 </div>
-<h2>Add new project</h2>
-<form action="/projects" method="post">
-  Name: <input name="project_name" type="text">
-  Description: <input name="project_description" type="text">
-  <input type="submit">
-</form>
+
+<!-- Modal -->
+<div class="modal fade" id="createProjectModal" tabindex="-1" role="dialog" aria-labelledby="createProjectModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createProjectModalLabel">Create project</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/projects" method="post">
+          <div class="form-group">
+            <label for="name" class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="project_name" name="project_name">
+          </div>
+          <div class="form-group">
+            <label for="description" class="col-form-label">Description:</label>
+            <textarea class="form-control" id="project_description" name="project_description"></textarea>
+          </div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
