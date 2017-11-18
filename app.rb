@@ -26,7 +26,7 @@ post '/projects' do
 
   response = http.request(request)
 
-  redirect('/')
+  response.body
 end
 
 get '/projects/:project_name' do

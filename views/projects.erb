@@ -2,7 +2,7 @@
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createProjectModal">
   Create new project
 </button>
-<div class="row">
+<div class="row" id="projects">
   <% projects.each do |p| %>
     <div class="col-sm-6">
       <div class="card mt-3">
@@ -27,7 +27,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="/projects" method="post">
+        <form>
           <div class="form-group">
             <label for="name" class="col-form-label">Name:</label>
             <input type="text" class="form-control" id="project_name" name="project_name">
@@ -37,7 +37,7 @@
             <textarea class="form-control" id="project_description" name="project_description"></textarea>
           </div>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Create</button>
+          <button type="submit" class="btn btn-primary" id="createProjectModalSubmitButton">Create</button>
         </form>
       </div>
     </div>
